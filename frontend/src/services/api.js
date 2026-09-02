@@ -7,14 +7,11 @@ const getApiBase = () => {
     return import.meta.env.VITE_API_BASE_URL;
   }
   if (typeof window !== 'undefined') {
-    // If running in browser on production (e.g. on render.com)
-    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-      return `${window.location.origin}/api`;
-    }
-    // If running in local dev on port 3000, backend is on port 5000
+    // If accessing dev server on port 3000 (from localhost or mobile phone via local IP)
     if (window.location.port === '3000') {
-      return 'http://localhost:5000/api';
+      return `http://${window.location.hostname}:5000/api`;
     }
+    // Production (Render.com) or direct server port 5000
     return `${window.location.origin}/api`;
   }
   return 'http://localhost:5000/api';
