@@ -2,10 +2,13 @@
   "name": "buildwithbharat-agentic-x402",
   "version": "1.0.0",
   "description": "Agentic Solutions powered by x402 on Algorand",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
-    "build": "npm --prefix backend install && npm --prefix frontend install && npm --prefix frontend run build",
-    "start": "npm --prefix backend start",
-    "test": "npm --prefix backend test"
+    "build": "cd backend && npm install && cd ../frontend && npm install && npm run build",
+    "start": "cd backend && npm start",
+    "test": "cd backend && npm test"
   },
   "keywords": [
     "x402",
