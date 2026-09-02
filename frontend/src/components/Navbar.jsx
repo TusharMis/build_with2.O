@@ -1,56 +1,81 @@
 import React, { useState } from 'react';
-import { Bot, Sparkles, ArrowLeft, Wallet, LogOut, Coins } from 'lucide-react';
+import { 
+  Bot, 
+  Sparkles, 
+  ArrowLeft, 
+  Wallet, 
+  LogOut, 
+  Coins, 
+  Atom, 
+  HeartPulse, 
+  Cpu, 
+  BookOpen, 
+  Receipt, 
+  Info,
+  Layers
+} from 'lucide-react';
 import { useAgent } from '../context/AgentContext';
 import { useAlgorandWallet } from '../context/WalletContext';
 import { WalletConnectModal } from './WalletConnectModal';
+import { AboutModal } from './AboutModal';
 
 export function Navbar() {
   const { currentView, setCurrentView, handleReset } = useAgent();
   const { isConnected, activeAddress, algoBalance, disconnectWallet } = useAlgorandWallet();
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
+  const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
+
+  const navItems = [
+    { id: 'landing', label: 'Dashboard', icon: Layers },
+    { id: 'learning', label: 'Quantum Learning', icon: BookOpen },
+    { id: 'circuit', label: 'Circuit Lab', icon: Cpu },
+    { id: 'tutor', label: 'AI Quantum Tutor', icon: Atom },
+    { id: 'health', label: 'Healthcare Analysis', icon: HeartPulse, highlight: true },
+    { id: 'agent', label: 'AI Health Agent', icon: Bot },
+    { id: 'history', label: 'Payment History', icon: Receipt },
+  ];
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-[#0B132B]/80 border-b border-slate-800">
+      <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-[#0B132B]/90 border-b border-slate-800">
+        {/* Top Bar */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          {/* Logo & Title */}
+          {/* Logo & Branding */}
           <div 
             onClick={() => { setCurrentView('landing'); handleReset(); }} 
             className="flex items-center space-x-3 cursor-pointer group"
           >
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-teal-500 to-emerald-400 p-0.5 shadow-lg shadow-teal-500/20 group-hover:scale-105 transition-transform">
               <div className="w-full h-full bg-[#0B132B] rounded-[10px] flex items-center justify-center">
-                <Bot className="w-5 h-5 text-teal-400" />
+                <Atom className="w-5 h-5 text-teal-400" />
               </div>
             </div>
             <div>
               <div className="flex items-center space-x-2">
                 <span className="font-bold text-lg tracking-tight text-white group-hover:text-teal-400 transition-colors">
-                  Agentic<span className="text-teal-400">x402</span>
+                  Quantum AI <span className="text-teal-400">HealthLab</span>
                 </span>
                 <span className="text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded bg-teal-500/20 text-teal-300 border border-teal-500/30">
                   BWB 2.0
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 hidden sm:block">
-                Algorand Testnet Micropayment Agent
+                Learn Quantum • Build Quantum AI • Apply to Healthcare
               </p>
             </div>
           </div>
 
-          {/* Center / Network Badge */}
-          <div className="hidden md:flex items-center space-x-2 text-xs">
-            <div className="flex items-center space-x-1.5 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700 text-slate-300 font-mono">
+          {/* Right Header Actions */}
+          <div className="flex items-center space-x-3">
+            {/* Network Badge */}
+            <div className="hidden lg:flex items-center space-x-1.5 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700 text-slate-300 text-xs font-mono">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>Algorand Testnet</span>
             </div>
-          </div>
 
-          {/* Right Header CTAs & Wallet Button */}
-          <div className="flex items-center space-x-3">
-            {/* Wallet Button in Navbar */}
+            {/* Wallet Button */}
             {isConnected ? (
-              <div className="hidden sm:flex items-center space-x-2 bg-slate-900 border border-slate-700/80 rounded-xl px-3 py-1.5 text-xs">
+              <div className="flex items-center space-x-2 bg-slate-900 border border-slate-700/80 rounded-xl px-3 py-1.5 text-xs">
                 <div className="font-mono text-teal-300 font-medium">
                   {activeAddress.substring(0, 6)}...{activeAddress.substring(activeAddress.length - 4)}
                 </div>
@@ -76,32 +101,52 @@ export function Navbar() {
               </button>
             )}
 
-            {/* View Switcher CTA */}
-            {currentView === 'dashboard' ? (
-              <button
-                onClick={() => setCurrentView('landing')}
-                className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-800 border border-slate-700 transition-all"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" />
-                <span>Overview</span>
-              </button>
-            ) : (
-              <button
-                onClick={() => setCurrentView('dashboard')}
-                className="flex items-center space-x-1.5 px-4 py-2 rounded-lg text-xs font-semibold text-black bg-gradient-to-r from-teal-400 to-emerald-400 hover:opacity-95 shadow-md shadow-teal-500/20 transition-all"
-              >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Launch Agent</span>
-              </button>
-            )}
+            {/* About Modal Button */}
+            <button
+              onClick={() => setIsAboutModalOpen(true)}
+              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800 transition-colors"
+              title="About Project"
+            >
+              <Info className="w-4 h-4" />
+            </button>
           </div>
+        </div>
+
+        {/* Navigation Bar Strip */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center space-x-1 overflow-x-auto py-1 border-t border-slate-800/60 text-xs scrollbar-none">
+          {navItems.map(item => {
+            const Icon = item.icon;
+            const isActive = currentView === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setCurrentView(item.id)}
+                className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg font-medium whitespace-nowrap transition-all ${
+                  isActive
+                    ? 'bg-teal-500/20 text-teal-300 border border-teal-500/40 font-semibold shadow-sm'
+                    : item.highlight
+                    ? 'text-amber-400 hover:text-amber-300 hover:bg-amber-500/10'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                }`}
+              >
+                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-teal-400' : ''}`} />
+                <span>{item.label}</span>
+              </button>
+            );
+          })}
         </div>
       </header>
 
-      {/* Wallet Connect Modal */}
+      {/* Wallet Modal */}
       <WalletConnectModal 
         isOpen={isWalletModalOpen} 
         onClose={() => setIsWalletModalOpen(false)} 
+      />
+
+      {/* About Modal */}
+      <AboutModal
+        isOpen={isAboutModalOpen}
+        onClose={() => setIsAboutModalOpen(false)}
       />
     </>
   );

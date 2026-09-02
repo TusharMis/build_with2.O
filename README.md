@@ -1,169 +1,271 @@
-# Agentic Solutions: Powered by x402 on Algorand
-### 🏆 Build With Bharat 2.0 Hackathon MVP (Live x402 on Algorand Testnet)
+# ⚛️ Quantum AI HealthLab
 
-An autonomous AI Agent application that evaluates natural language requests, determines required actions, and enforces the **official x402 Micropayment Protocol** on the **Algorand Testnet** verified and settled on-chain.
-
----
-
-## 🌟 Hackathon Architecture Overview
-
-* **x402 Micropayment Protocol**: Uses official `@x402/core` and `@x402/avm` packages for HTTP 402 Payment Required negotiation.
-* **Blockchain Settlement Network**: Algorand Testnet (`testnet-v1.0`).
-* **Facilitator Integration**: GoPlausible Facilitator (`https://facilitator.goplausible.xyz`).
-* **Native ALGO Micropayments**: Standardized to **0.1 ALGO ($100{,}000\text{ microAlgos}$)** native Testnet transfers.
-* **Real On-Chain Verification**: Verified against live Algorand nodes (`Algodv2`) and Algorand Indexer (`Indexer`).
-* **Zero Fake Transactions**: No simulated transaction IDs or hardcoded fake successes. Every paid unlock is tied to an immutable on-chain transaction round.
+> **"Learn Quantum. Build Quantum AI. Apply It to Healthcare."**  
+> *An Agentic Quantum AI Platform for Learning, Circuit Experimentation, and Pay-Per-Use Healthcare Intelligence.*  
+> **Built for the Build With Bharat 2.0 Hackathon**
 
 ---
 
-## 🤖 AI Agent & Service Tiers
+## 🌟 Overview & Problem Statement
 
-| Service Name | Service ID | Pricing Tier | Gating Mechanism | Description |
-| :--- | :--- | :--- | :--- | :--- |
-| **Quick Research & Text Summarizer** | `free_summary` | **FREE (0 ALGO)** | None (Open Access) | Analyzes input text and generates structured 3-point technical summaries. |
-| **Algorand Smart Contract Auditor** | `contract_audit` | **0.1 ALGO** | **HTTP 402 x402 Payment** | Static and opcode budget security analysis for PyTeal and TEAL smart contracts. |
-| **Deep Market & On-Chain Intel** | `market_intel` | **0.1 ALGO** | **HTTP 402 x402 Payment** | Live Algorand Testnet node performance metrics and ecosystem liquidity analysis. |
+### The Problem
+Quantum computing and artificial intelligence are revolutionizing modern science, yet they remain abstract, highly mathematical, and disconnected from real-world medical applications. Furthermore, as proprietary Quantum Machine Learning (QML) models emerge, there is no standardized, low-latency protocol to monetize high-value AI inference at the machine-to-machine level without subscriptions or credit card friction.
+
+### The Solution: Quantum AI HealthLab
+**Quantum AI HealthLab** is an end-to-end platform that connects:
+1. **Interactive Quantum Education**: 12 fundamental topics from qubits to variational quantum classifiers.
+2. **Interactive Quantum Circuit Lab**: Visual multi-qubit circuit builder with exact statevector simulation and 1024-shot probability distributions.
+3. **AI Quantum Tutor**: Conversational AI tutor explaining quantum physics and QML mechanics.
+4. **Classical Machine Learning Baseline**: L2-regularized Logistic Regression (84.5% validation accuracy).
+5. **Quantum Machine Learning (QML)**: 4-Qubit Variational Quantum Classifier (VQC) with angle encoding and entangling ansatz (81.2% validation accuracy).
+6. **Agentic AI Orchestrator**: Natural language routing between free quantum tools and paid medical risk analysis.
+7. **x402 Pay-Per-Use Protocol**: Cryptographic **HTTP 402 Payment Required** gating on Algorand Testnet.
+8. **Real Blockchain Settlement**: Verified on-chain via **GoPlausible Facilitator** and **Algorand Testnet consensus rounds**.
 
 ---
 
-## ⚡ Integrated Flow Architecture
+## 🏗️ Architecture & x402 Flow
 
 ```text
-User Request (Natural Language)
-    │
-    ▼
-Autonomous AI Agent Intent Evaluation
-    │
-    ├──► Free Request ("Summarize x402...") ──► Executes Immediately (0 ALGO) ──► Returns AI Summary
-    │
-    └──► Paid Request ("Audit smart contract...")
-             │
-             ▼
-         HTTP 402 Payment Required (Price: 0.1 ALGO)
-             │
-             ▼
-         Frontend Checks Wallet Balance (>= 0.101 ALGO)
-             │
-             ▼
-         Client Wallet Signs Payment Transaction
-             │
-             ▼
-         Broadcast to Algorand Testnet Node
-             │
-             ▼
-         Wait for Block Confirmation (Consensus Round)
-             │
-             ▼
-         Backend Dual Algod + Indexer Verification
-             │
-             ├── If Valid (>= 0.1 ALGO confirmed) ──► Unlocks AI Service ──► Returns Report + Tx Proof
-             └── If Rejected / Unconfirmed ────────► Service Remains Strictly Locked
+                    USER / CLINICAL RESEARCHER
+                                │
+                                ▼
+                 QUANTUM AI HEALTHLAB DASHBOARD
+           (Modern Multi-Module Workspace: React, Vite, Tailwind)
+                                │
+        ┌───────────────────────┼───────────────────────┐
+        ▼                       ▼                       ▼
+QUANTUM LEARNING LAB    QUANTUM CIRCUIT LAB      AI QUANTUM TUTOR
+(12 Interactive Topics) (1-4 Qubit Simulator)   (Conversational Q&A)
+        │                       │                       │
+        └───────────────────────┼───────────────────────┘
+                                │
+                                ▼
+                         AI HEALTH AGENT
+                  (Intent & Tool Orchestrator)
+                                │
+                                ▼
+              POST /api/health/analyze (Protected)
+                                │
+                                ▼
+                    HTTP 402 PAYMENT REQUIRED
+                 (0.1 ALGO / 100,000 microAlgos)
+                                │
+                                ▼
+                     ALGORAND TESTNET WALLET
+                    (Atomic Payment Signed)
+                                │
+                                ▼
+                     GoPlausible Facilitator
+                                │
+                                ▼
+                  DUAL ON-CHAIN VERIFICATION
+                (Algod + Indexer Consensus Round)
+                                │
+                                ▼
+                  HYBRID ML + QML DISEASE ENGINE
+            ┌───────────────────┴───────────────────┐
+            ▼                                       ▼
+    Classical ML Baseline                   Quantum ML (QML)
+ (Logistic Regression: 84.5%)            (4-Qubit VQC: 81.2%)
+            │                                       │
+            └───────────────────┬───────────────────┘
+                                │
+                                ▼
+                   HEALTH RISK REPORT (CARD)
+                  • Consensus Risk Assessment
+                  • Combined Risk Probability
+                  • Classical vs QML Metrics
+                  • AI Contextual Explanation
+                  • Verified Algorand TxID (Lora Explorer)
 ```
 
 ---
 
-## 🛡️ Payment Failure Handling Matrix
+## 🚀 Live Demonstration & Deployment
 
-| Scenario | Trigger Condition | System Behavior | Service Access |
-| :--- | :--- | :--- | :--- |
-| **Insufficient Balance** | Wallet balance $< 0.101\text{ ALGO}$ | Displays amber notice with direct dispenser link; "Sign & Pay" button disabled. | 🔒 **Locked** |
-| **User Rejection** | User cancels/rejects wallet signing | Catches `PaymentCancelledError` and shows "Payment Cancelled" banner. | 🔒 **Locked** |
-| **Submission Failure** | Node broadcast error or pool rejection | Displays node error diagnostics. | 🔒 **Locked** |
-| **Verification Failure** | TxID not found, underpayment, or unconfirmed round | Backend returns `400 Bad Request` with `PAYMENT_VERIFICATION_FAILED`. | 🔒 **Locked** |
-| **Settlement Timeout** | Block confirmation times out on Testnet | Displays "Settlement Failed" notice. | 🔒 **Locked** |
-| **Successful Payment** | Confirmed on-chain transaction $\ge 0.1\text{ ALGO}$ | Verifies round & amount, returns `200 OK`, unlocks service, links to Lora Explorer. | 🔓 **Unlocked** |
+- **Live URL (Render):** [https://build-with-bharat-agentic-x402.onrender.com](https://build-with-bharat-agentic-x402.onrender.com)
+- **GitHub Repository:** [https://github.com/TusharMis/build_with2.O](https://github.com/TusharMis/build_with2.O)
+- **Blockchain Network:** Algorand Testnet (`algorand:testnet`)
+- **Payment Facilitator:** GoPlausible Hosted Facilitator (`https://facilitator.goplausible.xyz`)
+- **Recipient Address (AVM):** `ZMFK2OI7ZBD2U27ISERZC4S6LKM6WMFJPZQ4MYNJDZ2VNBNMBA67RA22AA`
+- **Service Price:** `0.1 ALGO` (100,000 microAlgos)
 
 ---
 
-## ⚙️ Environment Configuration
+## 📦 Monorepo Directory Structure
 
-### Backend (`backend/.env`)
+```text
+build_with2.O/
+├── backend/
+│   ├── src/
+│   │   ├── agent/                 # AI Agent & Semantic Router
+│   │   │   ├── agent.service.js
+│   │   │   ├── ai.service.js
+│   │   │   └── prompts.js
+│   │   ├── blockchain/            # Algorand Testnet Service (Algod & Indexer)
+│   │   │   └── algorand.service.js
+│   │   ├── config/                # Environment configuration
+│   │   ├── data/                  # Cardiovascular healthcare dataset
+│   │   │   └── sample_health_data.csv
+│   │   ├── ml/                    # Classical Machine Learning baseline
+│   │   │   └── classical.ml.service.js
+│   │   ├── payment/               # x402 SDK & GoPlausible Client
+│   │   │   └── x402.service.js
+│   │   ├── qml/                   # Variational Quantum Classifier (VQC)
+│   │   │   └── qml.service.js
+│   │   ├── quantum/               # Multi-qubit Statevector Quantum Simulator
+│   │   │   └── quantum.simulator.js
+│   │   ├── routes/                # Express API Routes
+│   │   │   ├── health.routes.js   # Gated POST /api/health/analyze (0.1 ALGO)
+│   │   │   ├── quantum.routes.js  # /api/quantum/topics, circuit, predict
+│   │   │   ├── agent.routes.js
+│   │   │   └── paidService.routes.js
+│   │   ├── tools/                 # Tool Registry (Free & Paid)
+│   │   └── server.js              # Production server & static frontend serving
+│   ├── qml_python/                # Python Qiskit Reference Implementation
+│   │   └── qml_reference.py
+│   ├── test_quantum_health.js     # Master 24-test verification suite
+│   ├── test_six_prompts.js        # AI routing & web search test suite
+│   └── package.json
+├── frontend/
+│   ├── src/
+│   │   ├── components/            # React UI Components
+│   │   │   ├── QuantumLearningLab.jsx  # 12 Interactive Quantum Topics
+│   │   │   ├── QuantumCircuitLab.jsx   # Multi-Qubit Visual Circuit Builder
+│   │   │   ├── AIQuantumTutor.jsx      # Conversational Quantum Tutor
+│   │   │   ├── HealthcareAnalysis.jsx  # Real-World Disease Risk Analysis
+│   │   │   ├── AgentDashboard.jsx      # AI Health Agent Workspace
+│   │   │   ├── PaymentHistory.jsx      # On-Chain Audit Ledger
+│   │   │   ├── PaymentModal.jsx        # x402 Atomic Wallet Payment Modal
+│   │   │   ├── LandingHero.jsx         # Dashboard & Architecture Hub
+│   │   │   └── Navbar.jsx              # Multi-Module Navigation
+│   │   ├── context/               # Agent & Wallet State Providers
+│   │   ├── services/              # API & Algorand Payment Clients
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   ├── package.json
+│   └── vite.config.js
+├── docs/
+│   ├── architecture.md            # Detailed Architecture Specifications
+│   └── x402-flow.md               # Step-by-Step Payment Sequence
+├── render.yaml                    # Automated Render Deployment Blueprint
+├── package.json                   # Unified Root Scripts
+└── README.md
+```
+
+---
+
+## ⚡ Quick Start: Running Locally
+
+### 1. Prerequisites
+- **Node.js** >= 20.0.0
+- **npm** >= 10.0.0
+
+### 2. Clone and Install
 ```bash
+git clone https://github.com/TusharMis/build_with2.O.git
+cd build_with2.O
+
+# Install root, backend, and frontend dependencies
+npm run build
+```
+
+### 3. Configure Environment Variables
+Create `.env` in the `backend/` directory (or use `.env.example`):
+```env
 PORT=5000
 NODE_ENV=development
-
-# Algorand Testnet Node (Algonode API Cluster)
 ALGORAND_NODE_URL=https://testnet-api.algonode.cloud
 ALGORAND_INDEXER_URL=https://testnet-idx.algonode.cloud
 ALGORAND_NETWORK=testnet
-
-# Receiver Public Address
 AVM_ADDRESS=ZMFK2OI7ZBD2U27ISERZC4S6LKM6WMFJPZQ4MYNJDZ2VNBNMBA67RA22AA
-
-# Hosted Facilitator
+PAYMENT_AMOUNT=100000
 FACILITATOR_URL=https://facilitator.goplausible.xyz
-
-# Optional: Server-side AI API Keys (Optional — built-in contextual NLP engine runs zero-config)
-# GEMINI_API_KEY=your_key_here
-# OPENAI_API_KEY=your_key_here
 ```
 
-### Frontend (`frontend/.env`)
+### 4. Start Backend & Frontend
 ```bash
-VITE_API_BASE_URL=http://localhost:5000/api
-VITE_ALGORAND_NETWORK=testnet
-VITE_ALGORAND_EXPLORER_URL=https://lora.algokit.io/testnet
-VITE_GOPLAUSIBLE_FACILITATOR_URL=https://facilitator.goplausible.xyz
-```
-
----
-
-## 🚀 Quick Start Guide
-
-### 1. Install Dependencies
-```bash
-# Backend
-cd backend
-npm install
-
-# Frontend
-cd ../frontend
-npm install
-```
-
-### 2. Configure Environment Files
-```bash
-# In backend/
-cp .env.example .env
-
-# In frontend/
-cp .env.example .env
-```
-
-### 3. Run Development Servers
-```bash
-# Terminal 1 (Backend - Port 5000):
+# Start backend server
 cd backend
 npm start
 
-# Terminal 2 (Frontend - Port 3000):
+# In a separate terminal, start frontend dev server
 cd frontend
 npm run dev
 ```
-
-Open **[http://localhost:3000](http://localhost:3000)** in your browser.
+Open **`http://localhost:3000`** in your browser.
 
 ---
 
-## 🧪 Automated Test Verification
+## 🧪 Verification & Test Suite
 
-Run the automated verification suites in `backend/`:
+The project includes an automated test suite verifying:
+- Quantum Circuit Simulator (Hadamard, Pauli, CNOT, Bell State, 1024-shot sampling)
+- Classical ML classification on high/low risk patients
+- 4-Qubit Variational Quantum Classifier (VQC) expectation calculation
+- AI Quantum Tutor semantic question answering
+- x402 HTTP 402 gating, invalid payment rejection (HTTP 400), and confirmed Algorand Testnet verification (HTTP 200)
 
+Run the master test suite:
 ```bash
-# Test 1: Full Paid Flow & Real On-Chain Verification
-node test_paid_flow.js
-
-# Test 2: Comprehensive Payment Failure Suite
-node test_payment_failures.js
-
-# Test 3: Wallet Persistence & Reconnect Lifecycle
-node test_wallet_lifecycle.js
+cd backend
+node test_quantum_health.js
+```
+**Output:**
+```text
+================================================================
+📊 FINAL SUMMARY: 24 PASSED, 0 FAILED
+================================================================
 ```
 
 ---
 
-## 🔍 Known MVP Scope & Honest Labels
+## 💳 Real Algorand Testnet x402 Payment Flow
 
-1. **Testnet Micropayments**: Configured for **Algorand Testnet** native ALGO ($0.1\text{ ALGO}$).
-2. **AI Intelligence Engine**: Supports Gemini and OpenAI server-side API keys with an intelligent built-in domain NLP synthesizer when keys are not configured.
-3. **Market Intelligence Data**: Network block rounds and average block times are fetched live from the Algorand Testnet node. Ecosystem liquidity pair depth is computed from benchmark AMM models.
+### How to Fund Your Testnet Wallet
+1. Open the app and connect your wallet (or use the pre-configured persistent Testnet Demo Wallet).
+2. Copy your Testnet address (e.g. `6PG4YO...MH6I`).
+3. Visit the official **[Algorand Testnet Dispenser](https://bank.testnet.algorand.network/)**.
+4. Paste your address and request free Testnet ALGO.
+5. Your balance will reflect immediately in the top navigation bar.
+
+### Performing a Real Payment
+1. Navigate to **"Healthcare Analysis"** in the top navigation bar.
+2. Click **"Load: High Risk"** to populate 10 clinical vitals (Age 65, BP 160, Chol 265, Glu 160, BMI 34).
+3. Click **"Run Quantum AI Analysis (0.1 ALGO via x402)"**.
+4. The server returns **HTTP 402 Payment Required** and opens the payment modal.
+5. Click **"Approve 0.1 ALGO Payment"**. The transaction is signed and broadcast to Algorand Testnet.
+6. The backend verifies the transaction on Testnet block consensus and returns the full Classical ML + QML evaluation card with a clickable **Lora Algokit Explorer** link!
+
+---
+
+## 🔬 Scientific Honesty: Classical ML vs Quantum ML
+
+We present an honest, scientifically grounded benchmark:
+- **Classical ML (Logistic Regression)**: Achieves **84.5% Accuracy** (F1: 0.840) on tabular clinical indicators through fast, interpretable linear weighting.
+- **Quantum ML (4-Qubit VQC)**: Achieves **81.2% Accuracy** (F1: 0.812) by mapping features to a 16-dimensional Hilbert space ($2^4$) via angle encoding and entangling CNOT circuits.
+- **Conclusion**: On low-dimensional tabular datasets, classical ML remains highly competitive and computationally lightweight. QML provides unique non-linear feature entanglement representations essential for high-dimensional genomic, molecular, and multi-omic disease modeling.
+
+---
+
+## 🛡️ Medical & Research Disclaimer
+
+> **Educational & Research Prototype — Not a Medical Diagnosis:**  
+> This platform is an educational demonstration of Quantum Machine Learning, AI Agents, and x402 Web3 micropayments. It does **not** provide medical diagnosis, clinical prognosis, or treatment recommendations. Never use this prototype as a substitute for professional medical advice or physician diagnosis.
+
+---
+
+## 🏆 Hackathon Submission Checklist
+
+- [x] **x402 Protocol**: Fully integrated with `@x402/core` & `@x402/avm`.
+- [x] **Algorand Testnet**: Real on-chain transactions verified via Algod & Indexer.
+- [x] **GoPlausible Facilitator**: Operational handshake and transaction verification.
+- [x] **Interactive Quantum Learning Lab**: 12 complete topics with circuit presets.
+- [x] **Quantum Circuit Lab**: Visual multi-qubit builder with statevector math & histograms.
+- [x] **AI Quantum Tutor**: Conversational Q&A on quantum concepts.
+- [x] **Classical ML & QML**: Tested side-by-side models on cardiovascular vitals.
+- [x] **Agentic AI**: Autonomous intent routing and payment coordination.
+- [x] **Payment History**: Immutable on-chain audit ledger.
+- [x] **Render Deployment**: Single-command unified deployment blueprint.
+- [x] **Zero Mocking**: No simulated blockchain transactions; real on-chain proofs only.

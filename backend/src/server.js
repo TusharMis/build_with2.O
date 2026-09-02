@@ -8,6 +8,8 @@ import agentRoutes from './routes/agent.routes.js';
 import serviceRoutes from './routes/service.routes.js';
 import paymentRoutes from './routes/payment.routes.js';
 import paidServiceRoutes from './routes/paidService.routes.js';
+import quantumRoutes from './routes/quantum.routes.js';
+import healthRoutes from './routes/health.routes.js';
 import { x402PaymentService } from './payment/x402.service.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -27,7 +29,8 @@ app.use(express.json());
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'healthy',
-    service: 'Build With Bharat 2.0 - Agentic x402 Backend',
+    project: 'Quantum AI HealthLab — Build With Bharat 2.0',
+    service: 'Quantum ML & Healthcare x402 Backend',
     network: 'Algorand Testnet (CAIP-2)',
     facilitator: config.x402.facilitatorUrl,
     receiverAddress: config.algorand.receiverAddress,
@@ -36,6 +39,9 @@ app.get('/api/health', (req, res) => {
 });
 
 // Mount API Routes
+app.use('/api/quantum', quantumRoutes);
+app.use('/api', quantumRoutes);
+app.use('/api', healthRoutes);
 app.use('/api', paidServiceRoutes);
 app.use('/api/agent', agentRoutes);
 app.use('/api/services', serviceRoutes);
@@ -68,10 +74,11 @@ app.use((err, req, res, next) => {
 // Start Server & Initialize x402
 const server = app.listen(config.port, async () => {
   console.log(`====================================================`);
-  console.log(`🚀 Build With Bharat 2.0 x402 Backend Running`);
+  console.log(`⚛️  Quantum AI HealthLab Backend Running`);
   console.log(`🌐 Port: ${config.port}`);
   console.log(`⛓️  Algorand Receiver (AVM_ADDRESS): ${config.algorand.receiverAddress}`);
   console.log(`💳 GoPlausible Facilitator: ${config.x402.facilitatorUrl}`);
+  console.log(`🔬 Quantum Simulator & QML Engine: Ready`);
   console.log(`====================================================`);
 
   // Pre-initialize facilitator connection

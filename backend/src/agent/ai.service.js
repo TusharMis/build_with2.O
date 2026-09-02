@@ -463,10 +463,88 @@ User Query: "${prompt}"`
   }
 
   /**
-   * Semantic QA for General Stable Questions (0 ALGO)
    */
   _semanticQA(prompt) {
     const p = prompt.trim().toLowerCase();
+
+    // Quantum Tutor Q&A
+    if (p.includes('what is superposition') || p === 'superposition' || (p.includes('superposition') && p.includes('quantum'))) {
+      return {
+        answer: 'Quantum Superposition is a fundamental principle where a qubit can exist in a linear combination of states |0⟩ and |1⟩ simultaneously (|ψ⟩ = α|0⟩ + β|1⟩), rather than being restricted to a binary 0 or 1 like classical bits.',
+        keyTakeaways: [
+          'Parallel State Space: Enables an n-qubit system to represent 2^n states concurrently in quantum superposition.',
+          'Hadamard Gate Creation: Applying a Hadamard gate (H) to ground state |0⟩ creates an equal superposition: (|0⟩ + |1⟩)/√2.',
+          'Wavefunction Collapse: Superposition persists until observation, at which point measurement collapses the qubit into |0⟩ with probability |α|² or |1⟩ with probability |β|².'
+        ],
+        details: 'In Quantum AI HealthLab, superposition is used in angle feature maps to encode multiple patient biomarkers simultaneously into quantum state amplitudes.',
+        modelUsed: 'AI Quantum Tutor Engine'
+      };
+    }
+
+    if (p.includes('what is a qubit') || p === 'qubit' || p.includes('what is qubit')) {
+      return {
+        answer: 'A Qubit (Quantum Bit) is the basic unit of quantum information, physically realized via two-level quantum systems such as electron spin, trapped ions, or superconducting circuits.',
+        keyTakeaways: [
+          'Bloch Sphere Geometry: Unlike classical bits which are 0 or 1, a qubit state is represented as a point on the 3D Bloch sphere.',
+          'Complex Amplitudes: Expressed mathematically as |ψ⟩ = α|0⟩ + β|1⟩ where α, β ∈ ℂ and |α|² + |β|² = 1.',
+          'Exponential Scaling: While 4 classical bits store 1 four-bit number at a time, 4 entangled qubits represent all 16 states simultaneously.'
+        ],
+        details: 'Qubits form the foundation of our 4-Qubit Variational Quantum Classifier used for healthcare disease risk evaluation.',
+        modelUsed: 'AI Quantum Tutor Engine'
+      };
+    }
+
+    if (p.includes('cnot') || p.includes('explain cnot') || p.includes('controlled not')) {
+      return {
+        answer: 'The Controlled-NOT (CNOT) gate is a fundamental two-qubit quantum gate that flips the target qubit (|0⟩ ↔ |1⟩) if and only if the control qubit is in state |1⟩.',
+        keyTakeaways: [
+          'Entanglement Generator: Applying a CNOT gate to a superposition state (H on control qubit) produces maximally entangled Bell states.',
+          'Unitary Matrix: Represented as a 4x4 permutation matrix that maps |10⟩ → |11⟩ and |11⟩ → |10⟩ while leaving |00⟩ and |01⟩ unchanged.',
+          'QML Feature Correlation: In Quantum Machine Learning, CNOT chains create quantum entanglement between distinct patient biomarkers (such as blood pressure and glucose).'
+        ],
+        details: 'CNOT gates are essential for universal quantum computation and non-linear quantum kernel representations.',
+        modelUsed: 'AI Quantum Tutor Engine'
+      };
+    }
+
+    if (p.includes('difference between ml and qml') || (p.includes('ml') && p.includes('qml') && p.includes('difference'))) {
+      return {
+        answer: 'Classical ML uses classical linear algebra and statistical optimization on binary computers, whereas Quantum ML (QML) encodes data into high-dimensional quantum Hilbert spaces using quantum circuits and entanglement.',
+        keyTakeaways: [
+          'Feature Space: Classical ML works in Euclidean feature spaces ℝ^d, while QML maps data into an exponentially large 2^n complex Hilbert space.',
+          'Kernel Advantage: Quantum kernels can compute inner products between complex probability distributions that are intractable for classical computers.',
+          'Honest Healthcare Comparison: For standard tabular health data, Classical ML (Logistic Regression: 84.5% accuracy) remains fast and reliable, while QML (VQC: 81.2% accuracy) provides unique non-linear feature entanglement.'
+        ],
+        details: 'Quantum AI HealthLab compares both models side-by-side so researchers can see empirical trade-offs without unverified hype.',
+        modelUsed: 'AI Quantum Tutor Engine'
+      };
+    }
+
+    if (p.includes('why is qml useful') || (p.includes('qml') && p.includes('useful')) || p.includes('qml in healthcare')) {
+      return {
+        answer: 'QML is useful in healthcare because biological systems (molecular bonding, protein folding, multi-omic gene expressions, and metabolic cross-talk) exhibit complex non-linear correlations that map naturally onto entangled quantum states.',
+        keyTakeaways: [
+          'High-Dimensional Correlation: Variational Quantum Classifiers (VQCs) detect subtle multi-biomarker relationships across cardiovascular and metabolic health.',
+          'Drug Discovery & Genomics: Quantum simulations model molecular interaction Hamiltonians exponentially faster than classical supercomputers.',
+          'Pay-Per-Use Access: The x402 protocol on Algorand Testnet allows healthcare providers to access high-value QML inference on a per-request micropayment model.'
+        ],
+        details: 'In our platform, QML analyzes 10 patient biomarkers through a 4-qubit variational circuit gated by 0.1 ALGO on Algorand Testnet.',
+        modelUsed: 'AI Quantum Tutor Engine'
+      };
+    }
+
+    if (p.includes('entanglement') || p.includes('quantum entanglement')) {
+      return {
+        answer: 'Quantum Entanglement is a phenomenon where two or more qubits become correlated such that the quantum state of each qubit cannot be described independently of the state of the others, even when separated by large distances.',
+        keyTakeaways: [
+          'Non-Separable States: Represented by Bell states such as |Φ+⟩ = (|00⟩ + |11⟩)/√2.',
+          'Instantaneous Correlation: Measuring one entangled qubit immediately determines the outcome of the other.',
+          'Foundation for Quantum Advantage: Crucial for quantum teleportation, superdense coding, and quantum machine learning feature representation.'
+        ],
+        details: 'Entanglement in our QML ansatz is implemented via CNOT entangling gates connecting cardiovascular and lifestyle features.',
+        modelUsed: 'AI Quantum Tutor Engine'
+      };
+    }
 
     // 1. General Question: Capital of India
     if (p.includes('capital of india') || (p.includes('capital') && p.includes('india'))) {

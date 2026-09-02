@@ -1,5 +1,5 @@
 /**
- * API Service Client for Backend & x402 Endpoints
+ * API Service Client for Quantum AI HealthLab Backend & x402 Endpoints
  */
 
 const getApiBase = () => {
@@ -27,7 +27,7 @@ export const api = {
    * Health & network status check
    */
   async getStatus() {
-    const res = await fetch(`${API_BASE}/payment/status`);
+    const res = await fetch(`${API_BASE}/health`);
     if (!res.ok) throw new Error('Failed to fetch network status');
     return res.json();
   },
@@ -51,8 +51,97 @@ export const api = {
   },
 
   /**
+   * Quantum Learning Topics
+   */
+  async getQuantumTopics() {
+    const res = await fetch(`${API_BASE}/quantum/topics`);
+    if (!res.ok) throw new Error('Failed to fetch quantum topics');
+    return res.json();
+  },
+
+  /**
+   * Run Quantum Circuit Simulator
+   */
+  async simulateCircuit({ numQubits = 2, gates = [] }) {
+    const res = await fetch(`${API_BASE}/quantum/circuit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ numQubits, gates })
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: 'Circuit simulation failed' }));
+      throw new Error(err.error || 'Circuit simulation failed');
+    }
+    return res.json();
+  },
+
+  /**
+   * Classical ML Prediction
+   */
+  async predictClassicalML(patient) {
+    const res = await fetch(`${API_BASE}/ml/predict`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ patient })
+    });
+    return res.json();
+  },
+
+  /**
+   * Quantum ML (QML) Prediction
+   */
+  async predictQML(patient) {
+    const res = await fetch(`${API_BASE}/qml/predict`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ patient })
+    });
+    return res.json();
+  },
+
+  /**
+   * Compare Classical ML vs QML
+   */
+  async compareMLvsQML(patient) {
+    const res = await fetch(`${API_BASE}/ml-vs-qml`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ patient })
+    });
+    return res.json();
+  },
+
+  /**
+   * Protected Healthcare Analysis (Gated by x402 on Algorand Testnet)
+   */
+  async analyzeHealthcare({ patient, txId, sender }) {
+    const res = await fetch(`${API_BASE}/health/analyze`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ patient, txId, sender })
+    });
+
+    const data = await res.json();
+
+    return {
+      status: res.status,
+      data,
+      isPaymentRequired: res.status === 402,
+      isSuccess: res.status === 200,
+    };
+  },
+
+  /**
+   * Payment History Audit Log
+   */
+  async getPaymentHistory() {
+    const res = await fetch(`${API_BASE}/payments`);
+    if (!res.ok) throw new Error('Failed to fetch payment history');
+    return res.json();
+  },
+
+  /**
    * Send chat request to the AI Agent
-   * Handles 200 OK (free or paid verified) and 402 Payment Required responses
    */
   async sendAgentChat({ message, selectedToolId, txId, sender, paymentPayload, paymentRequirements }) {
     const res = await fetch(`${API_BASE}/agent/chat`, {
