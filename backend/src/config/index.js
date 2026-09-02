@@ -4,6 +4,7 @@ dotenv.config();
 export const config = {
   port: process.env.PORT || 5000,
   nodeEnv: process.env.NODE_ENV || 'development',
+  geminiApiKey: process.env.GEMINI_API_KEY || '',
   algorand: {
     nodeUrl: process.env.ALGORAND_NODE_URL || 'https://testnet-api.algonode.cloud',
     indexerUrl: process.env.ALGORAND_INDEXER_URL || 'https://testnet-idx.algonode.cloud',

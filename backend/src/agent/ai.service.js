@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import { GoogleGenAI } from '@google/genai';
 import { webSearchService } from '../tools/search.service.js';
 
@@ -249,10 +251,10 @@ Return JSON matching:
     }
 
     const response = await this.geminiClient.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-3.6-flash',
       contents: prompt,
       config: {
-        systemInstruction: `You are the Build With Bharat 2.0 Autonomous AI Agent powered by x402 on Algorand.
+        systemInstruction: `You are the Quantum AI HealthLab Autonomous AI Agent powered by x402 on Algorand.
 Answer user prompts directly, concisely, and accurately.
 - If asked a simple question (e.g. "What is the capital of India? Explain in one sentence."), output the exact 1-sentence direct answer.
 - If live web search results are provided, use them for factual real-time accuracy and cite the source URL.
@@ -267,14 +269,14 @@ Format your output as JSON:
     });
 
     const text = response.text || (response.candidates?.[0]?.content?.parts?.[0]?.text);
-    return this._parseLLMResponse(text, 'Google Gemini 2.0 Flash');
+    return this._parseLLMResponse(text, 'Google Gemini 3.6 Flash');
   }
 
   /**
    * Calls Google Gemini via direct REST API fallback
    */
   async _callGeminiREST(prompt) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${this.geminiApiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${this.geminiApiKey}`;
     const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -295,7 +297,7 @@ User Query: "${prompt}"`
 
     const data = await res.json();
     const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    return this._parseLLMResponse(rawText, 'Google Gemini 1.5 Flash');
+    return this._parseLLMResponse(rawText, 'Google Gemini 3.6 Flash');
   }
 
   /**
