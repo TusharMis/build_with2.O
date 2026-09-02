@@ -21,13 +21,16 @@ import {
 } from 'lucide-react';
 import { useAgent } from '../context/AgentContext';
 import { useAlgorandWallet } from '../context/WalletContext';
+import { algorandPaymentService } from '../services/algorandPayment';
 
-export function PaymentModal() {
+export function PaymentModal({ paymentChallenge: propChallenge, onSuccess, onClose } = {}) {
   const { 
-    paymentChallenge, 
-    handleDismissPayment, 
-    handleExecutePayment 
+    paymentChallenge: contextChallenge, 
+    handleDismissPayment: contextDismiss, 
+    handleExecutePayment: contextExecute 
   } = useAgent();
+
+  const paymentChallenge = propChallenge || contextChallenge;
 
   const {
     isConnected,
@@ -42,7 +45,7 @@ export function PaymentModal() {
   
   const [currentTxId, setCurrentTxId] = useState('');
   const [confirmedRound, setConfirmedRound] = useState(null);
-  const [errorCode, setErrorCode] = useState(null); // 'INSUFFICIENT_BALANCE' | 'PAYMENT_CANCELLED' | 'SUBMISSION_FAILED' | 'VERIFICATION_FAILED' | 'SETTLEMENT_FAILED'
+  const [errorCode, setErrorCode] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [showTechnicalDetails, setShowTechnicalDetails] = useState(false);
 
@@ -65,17 +68,44 @@ export function PaymentModal() {
   const priceDisplay = service.price || '0.1 ALGO';
   const hasSufficientBalance = algoBalance >= 0.101; // 0.1 ALGO + 0.001 fee
 
+  const handleDismiss = () => {
+    if (onClose) onClose();
+    else if (contextDismiss) contextDismiss();
+  };
+
   const handlePayClick = async () => {
     setErrorMessage(null);
     setErrorCode(null);
 
     try {
-      await handleExecutePayment((stateName, payload) => {
-        setPaymentState(stateName);
-        if (payload?.txId) setCurrentTxId(payload.txId);
-        if (payload?.confirmedRound) setConfirmedRound(payload.confirmedRound);
-        if (payload?.code) setErrorCode(payload.code);
-      });
+      if (onSuccess) {
+        // Direct on-chain broadcast for modular pages (e.g. Healthcare Analysis)
+        const outcome = await algorandPaymentService.broadcastPayment({
+          receiverAddress: receiver,
+          serviceId: service.id || 'health_analyze',
+          onStateChange: (stateName, payload) => {
+            setPaymentState(stateName);
+            if (payload?.txId) setCurrentTxId(payload.txId);
+            if (payload?.confirmedRound) setConfirmedRound(payload.confirmedRound);
+            if (payload?.code) setErrorCode(payload.code);
+          }
+        });
+
+        setPaymentState('UNLOCKING_SERVICE');
+        await onSuccess(outcome.txId, outcome.sender);
+        setPaymentState('PAYMENT_CONFIRMED');
+        setTimeout(() => {
+          if (onClose) onClose();
+        }, 1200);
+      } else if (contextExecute) {
+        // Default Agent Workspace chat flow
+        await contextExecute((stateName, payload) => {
+          setPaymentState(stateName);
+          if (payload?.txId) setCurrentTxId(payload.txId);
+          if (payload?.confirmedRound) setConfirmedRound(payload.confirmedRound);
+          if (payload?.code) setErrorCode(payload.code);
+        });
+      }
     } catch (err) {
       console.error('Payment execution error:', err);
       setPaymentState('PAYMENT_FAILED');
@@ -121,7 +151,7 @@ export function PaymentModal() {
             </div>
           </div>
           <button
-            onClick={handleDismissPayment}
+            onClick={handleDismiss}
             disabled={isProcessing}
             className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors"
           >
@@ -249,7 +279,7 @@ export function PaymentModal() {
                   {paymentState === 'WAITING_FOR_APPROVAL' && 'Waiting for Wallet Approval & Cryptographic Signature...'}
                   {paymentState === 'TRANSACTION_SUBMITTED' && 'Transaction Submitted to Algorand Testnet Node...'}
                   {paymentState === 'VERIFYING_PAYMENT' && 'Verifying On-Chain Block Confirmation...'}
-                  {paymentState === 'UNLOCKING_SERVICE' && 'Unlocking Smart Contract Auditor Service...'}
+                  {paymentState === 'UNLOCKING_SERVICE' && `Unlocking ${service.name || 'AI Analysis Service'}...`}
                 </div>
               </div>
 
@@ -270,7 +300,7 @@ export function PaymentModal() {
                 <span>Payment Confirmed on Algorand Testnet!</span>
               </div>
               <p className="text-slate-300">
-                Transaction confirmed in block #{confirmedRound}. Smart Contract Auditor result unlocked!
+                Transaction confirmed in block #{confirmedRound}. {service.name || 'AI Service'} result unlocked!
               </p>
             </div>
           )}

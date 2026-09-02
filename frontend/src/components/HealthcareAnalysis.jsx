@@ -324,10 +324,19 @@ export function HealthcareAnalysis() {
             <button
               onClick={handleRunFullAnalysis}
               disabled={isLoading}
-              className="w-full sm:w-auto flex-1 flex items-center justify-center space-x-2 px-6 py-3.5 rounded-xl font-bold text-xs text-black bg-gradient-to-r from-amber-400 via-orange-400 to-amber-300 hover:brightness-110 shadow-lg shadow-amber-500/25 transition-all transform hover:-translate-y-0.5"
+              className="w-full sm:w-auto flex-1 flex items-center justify-center space-x-2 px-6 py-3.5 rounded-xl font-bold text-xs text-black bg-gradient-to-r from-amber-400 via-orange-400 to-amber-300 hover:brightness-110 shadow-lg shadow-amber-500/25 transition-all transform hover:-translate-y-0.5 disabled:opacity-60 cursor-pointer"
             >
-              <Lock className="w-4 h-4 text-black" />
-              <span>Run Quantum AI Analysis (0.1 ALGO via x402)</span>
+              {isLoading ? (
+                <>
+                  <Loader2 className="w-4 h-4 text-black animate-spin" />
+                  <span>Connecting to x402 Gateway...</span>
+                </>
+              ) : (
+                <>
+                  <Lock className="w-4 h-4 text-black" />
+                  <span>Run Quantum AI Analysis (0.1 ALGO via x402)</span>
+                </>
+              )}
             </button>
 
             <button

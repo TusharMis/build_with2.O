@@ -62,14 +62,14 @@ export class AlgorandPaymentService {
   }
 
   /**
-   * Executes full on-chain 0.1 ALGO payment flow on Algorand Testnet
+   * Broadcasts a 0.1 ALGO on-chain payment and waits for consensus confirmation
    * @param {Object} params
-   * @param {string} params.receiverAddress - Recipient address
-   * @param {string} params.serviceId - Target service ('contract_audit')
-   * @param {string} params.query - User prompt query
-   * @param {Function} [params.onStateChange] - Callback for UI state transitions
+   * @param {string} [params.receiverAddress]
+   * @param {string} [params.serviceId]
+   * @param {Function} [params.onStateChange]
+   * @returns {Promise<{ txId: string, confirmedRound: number, sender: string }>}
    */
-  async executePayment({ receiverAddress = DEFAULT_RECEIVER, serviceId = 'contract_audit', query, onStateChange }) {
+  async broadcastPayment({ receiverAddress = DEFAULT_RECEIVER, serviceId = 'payment', onStateChange } = {}) {
     const notifyState = (state, details = {}) => {
       console.log(`[Payment Flow State] ${state}`, details);
       if (onStateChange) onStateChange(state, details);
@@ -170,6 +170,28 @@ export class AlgorandPaymentService {
 
     console.log(`[Payment Log] Transaction confirmed on Algorand Testnet in round: #${confirmedRound}`);
 
+    return {
+      txId,
+      confirmedRound,
+      sender: activeAccount.address
+    };
+  }
+
+  /**
+   * Executes full on-chain 0.1 ALGO payment flow and unlocks paid service on Algorand Testnet
+   */
+  async executePayment({ receiverAddress = DEFAULT_RECEIVER, serviceId = 'contract_audit', query, onStateChange }) {
+    const notifyState = (state, details = {}) => {
+      console.log(`[Payment Flow State] ${state}`, details);
+      if (onStateChange) onStateChange(state, details);
+    };
+
+    const { txId, confirmedRound, sender } = await this.broadcastPayment({
+      receiverAddress,
+      serviceId,
+      onStateChange
+    });
+
     // Step 7: Send Proof to Backend to Unlock AI Service
     notifyState('UNLOCKING_SERVICE', { txId, confirmedRound });
     let backendRes;
@@ -178,7 +200,7 @@ export class AlgorandPaymentService {
         serviceId,
         query,
         txId,
-        sender: activeAccount.address
+        sender
       });
     } catch (netErr) {
       notifyState('PAYMENT_FAILED', { code: 'VERIFICATION_FAILED' });
@@ -195,15 +217,21 @@ export class AlgorandPaymentService {
     notifyState('PAYMENT_CONFIRMED', {
       txId,
       confirmedRound,
-      result: backendRes.data.result,
-      settlement: backendRes.data.settlement
+      result: backendRes.data.result
     });
 
     return {
       success: true,
       txId,
       confirmedRound,
-      settlement: backendRes.data.settlement,
+      settlement: {
+        network: 'Algorand Testnet',
+        amount: '0.1 ALGO',
+        amountMicroAlgos: Number(REQUIRED_AMOUNT_MICRO_ALGOS),
+        txId,
+        confirmedRound,
+        explorerUrl: `https://lora.algokit.io/testnet/transaction/${txId}`
+      },
       result: backendRes.data.result
     };
   }
