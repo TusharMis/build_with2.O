@@ -1,0 +1,33 @@
+{
+  "name": "agentic-x402-backend",
+  "version": "1.0.0",
+  "description": "Production Backend API for Agentic Solutions powered by x402 on Algorand",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node test_all.js"
+  },
+  "keywords": [
+    "x402",
+    "algorand",
+    "agentic-ai",
+    "micropayments",
+    "goplausible"
+  ],
+  "author": "Build With Bharat 2.0 Team",
+  "license": "MIT",
+  "dependencies": {
+    "@google/genai": "^2.20.0",
+    "@x402/avm": "^2.24.0",
+    "@x402/core": "^2.24.0",
+    "algosdk": "^3.7.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0"
+  }
+}

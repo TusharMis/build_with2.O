@@ -1,0 +1,30 @@
+{
+  "name": "agentic-x402-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@blockshake/defly-connect": "^1.2.1",
+    "@perawallet/connect": "^1.6.0",
+    "@txnlab/use-wallet-react": "^5.0.0",
+    "@x402/avm": "^2.24.0",
+    "@x402/core": "^2.24.0",
+    "algosdk": "^3.7.0",
+    "lucide-react": "^0.475.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "vite": "^5.4.11",
+    "vite-plugin-node-polyfills": "^0.28.0"
+  }
+}
