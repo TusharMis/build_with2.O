@@ -109,7 +109,7 @@ export function AgentProvider({ children }) {
           id: (Date.now() + 1).toString(),
           sender: 'agent',
           status: 'error',
-          text: 'Unable to reach the Agent backend. Make sure the backend server is running on port 5000.',
+          text: 'Unable to reach the Agent backend service. Please check network connectivity and try again.',
           timestamp: new Date().toISOString(),
         },
       ]);

@@ -2,7 +2,25 @@
  * API Service Client for Backend & x402 Endpoints
  */
 
-const API_BASE = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_BASE_URL) || 'http://localhost:5000/api';
+const getApiBase = () => {
+  if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_BASE_URL) {
+    return import.meta.env.VITE_API_BASE_URL;
+  }
+  if (typeof window !== 'undefined') {
+    // If running in browser on production (e.g. on render.com)
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      return `${window.location.origin}/api`;
+    }
+    // If running in local dev on port 3000, backend is on port 5000
+    if (window.location.port === '3000') {
+      return 'http://localhost:5000/api';
+    }
+    return `${window.location.origin}/api`;
+  }
+  return 'http://localhost:5000/api';
+};
+
+export const API_BASE = getApiBase();
 
 export const api = {
   /**
