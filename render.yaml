@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: build-with-bharat-agentic-x402
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: ALGORAND_NODE_URL
+        value: https://testnet-api.algonode.cloud
+      - key: ALGORAND_INDEXER_URL
+        value: https://testnet-idx.algonode.cloud
+      - key: ALGORAND_NETWORK
+        value: testnet
+      - key: AVM_ADDRESS
+        value: ZMFK2OI7ZBD2U27ISERZC4S6LKM6WMFJPZQ4MYNJDZ2VNBNMBA67RA22AA
+      - key: FACILITATOR_URL
+        value: https://facilitator.goplausible.xyz
+      - key: GEMINI_API_KEY
+        sync: false
